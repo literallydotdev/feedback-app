@@ -9,7 +9,7 @@ Slack App
 
 ## Setting It Up
 - Install Nodejs and React.
-- Create a Slack App.(Instructions)[https://blog.openreplay.com/integrate-react-with-slack/].
+- Create a Slack App.[Instructions](https://blog.openreplay.com/integrate-react-with-slack/).
 - Download the Zip file or fork the respository.
 - Open .env file, Set the value of "VITE_HOOK" to the Slack App webhook URL.
 - CD into the project directory.
