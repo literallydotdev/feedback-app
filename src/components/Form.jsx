@@ -40,7 +40,7 @@ const Form =({handleSubmit} )=>{
 				<FaComment  style={{marginRight:3}} />
             Your Feedback:
 			</label>
-			<textarea className="element-border" value={comments} id="msg" name="msg" rows="4" cols="20" required onChange={handleTextArea}>
+			<textarea className="text-input element-border" value={comments} id="msg" name="msg" rows="4" cols="20" required onChange={handleTextArea}>
 			</textarea>
 		</div>
 		<button className="form-button element-border" type="submit">Submit </button>

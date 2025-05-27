@@ -31,7 +31,7 @@ const api_url = import.meta.env.VITE_HOOK_URL;
 	}
 	return(
 		<div >
-			<button className="feedback-button element-border" onClick={openPopUp}>Feedback </button>
+			<button className="feedback-button element-border" onClick={openPopUp}>Feedback</button>
                 {showForm &&
 				<div  className="feedback-modal ">
 					<FaWindowClose onClick={closePopUp} className="feedback-closewindow "/>
