@@ -5,7 +5,6 @@ describe('Frontend Component Testing', () => {
        
   it('App should mount without error ', () => {
     cy.mount(<App />)
-    cy.intercept('','success')
     cy.get('.feedback-button').then(($btn)=>{
            const txt = String($btn.text())
            expect(txt).to.eq("Feedback")
@@ -14,6 +13,7 @@ describe('Frontend Component Testing', () => {
     
     cy.get('.form-input').type("myname@gmail.com")
     cy.get('#msg').type("Interesting docs")
+    cy.intercept('','success')
     cy.get('button[type="submit"]').click()  
     
   })
