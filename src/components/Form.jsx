@@ -1,53 +1,90 @@
-import React, { useState } from 'react';
-import { FaEnvelope, FaComment, FaSmile } from "react-icons/fa";
+import { useState } from 'react';
+import PropTypes from 'prop-types';
+import { FaEnvelope, FaComment, FaSmile } from 'react-icons/fa';
 
-const Form =({handleSubmit} )=>{
+const Form = ({ handleSubmit }) => {
+  const [comments, setComment] = useState('');
+  const [email, setEmail] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [comments, setComment] = useState(" ");
-  const [email, setEmail] = useState(" ");
+  const handleTextArea = (e) => {
+    setComment(e.target.value);
+  };
 
-  const handleTextArea = (e)=>{
-	setComment(e.target.value);
+  const handleEmail = (e) => {
+    setEmail(e.target.value);
+  };
 
-  }
-  const handleEmail=(e)=>{
-	setEmail(e.target.value);
-  }
-  const submitForm=(e)=>{
-		e.preventDefault();
-		const data ={email:email,comments:comments}
-        handleSubmit(data)
-		setEmail("");
-		setComment(" ")
-  }
+  const submitForm = async (e) => {
+    e.preventDefault();
+    if (isSubmitting) return;
 
-  return(
+    setIsSubmitting(true);
+    const data = { email: email.trim(), comments: comments.trim() };
 
-	<form onSubmit={submitForm} className='feedback-form' >
-		<div className='formelement-container'>
-			<label className='formlabel'>
-				<FaSmile  style={{marginRight:3}}/>
-				Is this page useful?
-			</label>
-		</div>
-		<div className=" formelement-container">
-			<label htmlFor="email" className="formlabel "><FaEnvelope  style={{marginRight:3,padding:3}} />
-			Email Address</label>
-			<input type="email" name="email" className="form-input element-border"  value={email} required  onChange={handleEmail}/>
-		</div>
-		<div className="formelement-container">
-			<label htmlFor="msg" className='formlabel'>
-				<FaComment  style={{marginRight:3}} />
-            Your Feedback:
-			</label>
-			<textarea className="text-input element-border" value={comments} id="msg" name="msg" rows="4" cols="20" required onChange={handleTextArea}>
-			</textarea>
-		</div>
-		<button className="form-button element-border" type="submit">Submit </button>
-	</form>
+    try {
+      await handleSubmit(data);
+    } finally {
+      setIsSubmitting(false);
+      setEmail('');
+      setComment('');
+    }
+  };
 
-  )
+  return (
+    <form onSubmit={submitForm} className="feedback-form">
+      <div className="formelement-container">
+        <label className="formlabel">
+          <FaSmile style={{ marginRight: 8 }} />
+          How was your experience?
+        </label>
+      </div>
 
-}
+      <div className="formelement-container">
+        <label htmlFor="email" className="formlabel">
+          <FaEnvelope style={{ marginRight: 8 }} />
+          Email Address
+        </label>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          className="form-input"
+          value={email}
+          placeholder="your@email.com"
+          required
+          onChange={handleEmail}
+          disabled={isSubmitting}
+        />
+      </div>
+
+      <div className="formelement-container">
+        <label htmlFor="msg" className="formlabel">
+          <FaComment style={{ marginRight: 8 }} />
+          Your Feedback
+        </label>
+        <textarea
+          className="text-input"
+          value={comments}
+          id="msg"
+          name="msg"
+          rows="4"
+          placeholder="Tell us what you think..."
+          required
+          onChange={handleTextArea}
+          disabled={isSubmitting}
+        />
+      </div>
+
+      <button className="form-button" type="submit" disabled={isSubmitting}>
+        {isSubmitting ? 'Sending...' : 'Send Feedback'}
+      </button>
+    </form>
+  );
+};
+
+Form.propTypes = {
+  handleSubmit: PropTypes.func.isRequired,
+};
 
 export default Form;

@@ -13,12 +13,17 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 
+/* global Cypress */
+
 // Import commands.js using ES2015 syntax:
-import './commands'
+import './commands';
 
-import { mount } from 'cypress/react'
+// Import global CSS to make CSS variables and global styles available in component tests
+import '../../src/index.css';
 
-Cypress.Commands.add('mount', mount)
+import { mount } from 'cypress/react';
+
+Cypress.Commands.add('mount', mount);
 
 // Example use:
 // cy.mount(<MyComponent />)
